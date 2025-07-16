@@ -1,0 +1,38 @@
+@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbWQ0OXQyenQwMDAwd2o0dzhnaHVmMDc5IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyNTY4Mjc5LCJleHAiOjE3NTMxNzMwNzl9.KJgfSo3U_Xl3sqHDBJF2w6T8s_XBdzFrvgjbu2gqyZg
+
+### Register User
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePass123!",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "+254700000001"
+}
+
+###
+
+### Login User
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "SecurePass123!"
+}
+
+###
+
+### Refresh Token (optional if implemented as GET with JWT guard)
+GET http://localhost:3000/auth/refresh
+Authorization: Bearer {{access_token}}
+
+###
+
+### Protected Route Example (e.g., Get Profile)
+GET http://localhost:3000/user/me
+Authorization: Bearer {{access_token}}
+
+###

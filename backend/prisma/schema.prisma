@@ -1,0 +1,236 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum ParcelStatus {
+  PENDING
+  CONFIRMED
+  PICKED_UP
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  RETURNED
+}
+
+enum WeightCategory {
+  LIGHT      // 0-5kg
+  MEDIUM     // 5-20kg
+  HEAVY      // 20-50kg
+  EXTRA_HEAVY // 50kg+
+}
+
+enum NotificationType {
+  EMAIL
+  SMS
+  PUSH
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  firstName   String
+  lastName    String
+  phone       String?
+  role        UserRole @default(USER)
+  isActive    Boolean  @default(true)
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime? // For soft delete
+
+  // Address information
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  country     String?
+
+  // Relationships
+  sentParcels     Parcel[] @relation("SenderParcels")
+  receivedParcels Parcel[] @relation("ReceiverParcels")
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+
+  @@map("users")
+  ParcelStatusHistory ParcelStatusHistory[]
+}
+
+model Parcel {
+  id              String         @id @default(cuid())
+  trackingNumber  String         @unique @default(cuid())
+  description     String
+  weight          Float          // in kg
+  weightCategory  WeightCategory
+  status          ParcelStatus   @default(PENDING)
+  estimatedCost   Float
+  actualCost      Float?
+  
+  // Pickup information
+  pickupAddress   String
+  pickupCity      String
+  pickupState     String
+  pickupZipCode   String
+  pickupCountry   String
+  pickupLat       Float?
+  pickupLng       Float?
+  pickupDate      DateTime?
+  
+  // Delivery information
+  deliveryAddress String
+  deliveryCity    String
+  deliveryState   String
+  deliveryZipCode String
+  deliveryCountry String
+  deliveryLat     Float?
+  deliveryLng     Float?
+  deliveryDate    DateTime?
+  estimatedDeliveryDate DateTime?
+  
+  // Additional details
+  specialInstructions String?
+  fragile            Boolean @default(false)
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? // For soft delete
+  
+  // Relationships
+  senderId    String
+  receiverId  String
+  sender      User   @relation("SenderParcels", fields: [senderId], references: [id])
+  receiver    User   @relation("ReceiverParcels", fields: [receiverId], references: [id])
+  
+  statusHistory   ParcelStatusHistory[]
+  notifications   Notification[]
+  auditLogs       AuditLog[]
+
+  @@map("parcels")
+}
+
+model ParcelStatusHistory {
+  id        String       @id @default(cuid())
+  parcelId  String
+  status    ParcelStatus
+  notes     String?
+  location  String?
+  lat       Float?
+  lng       Float?
+  updatedBy String       // User ID who updated the status
+  createdAt DateTime     @default(now())
+  
+  // Relationships
+  parcel    Parcel @relation(fields: [parcelId], references: [id], onDelete: Cascade)
+  update   User   @relation(fields: [updatedBy], references: [id])
+
+  @@map("parcel_status_history")
+}
+
+model WeightPricing {
+  id             String         @id @default(cuid())
+  weightCategory WeightCategory @unique
+  minWeight      Float
+  maxWeight      Float?
+  basePrice      Float
+  pricePerKg     Float
+  isActive       Boolean        @default(true)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("weight_pricing")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  parcelId  String?
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  isSent    Boolean          @default(false)
+  sentAt    DateTime?
+  createdAt DateTime         @default(now())
+  
+  // Notification details
+  emailAddress String?
+  phoneNumber  String?
+  
+  // Relationships
+  user   User    @relation(fields: [userId], references: [id])
+  parcel Parcel? @relation(fields: [parcelId], references: [id])
+
+  @@map("notifications")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  parcelId  String?
+  action    String   // CREATE, UPDATE, DELETE, STATUS_CHANGE, etc.
+  entity    String   // USER, PARCEL, NOTIFICATION, etc.
+  oldValue  Json?
+  newValue  Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  
+  // Relationships
+  user   User    @relation(fields: [userId], references: [id])
+  parcel Parcel? @relation(fields: [parcelId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model AppSettings {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  category  String   // EMAIL, SMS, GENERAL, etc.
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("app_settings")
+}
+
+model EmailTemplate {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  subject     String
+  htmlContent String
+  textContent String?
+  variables   Json?    // Array of variable names used in template
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("email_templates")
+}
+
+model SMSTemplate {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  content   String
+  variables Json?    // Array of variable names used in template
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("sms_templates")
+}

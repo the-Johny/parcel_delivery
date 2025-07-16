@@ -1,0 +1,70 @@
+<div class="register-container">
+  <h2>Create Account</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        id="firstName"
+        type="text"
+        formControlName="firstName"
+        [ngClass]="{ 'is-invalid': hasError('firstName', 'required') || hasError('firstName', 'minlength') }"
+        placeholder="Enter your first name"
+      />
+      <div *ngIf="hasError('firstName', 'required')" class="invalid-feedback">First name is required</div>
+      <div *ngIf="hasError('firstName', 'minlength')" class="invalid-feedback">Minimum 2 characters required</div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        id="lastName"
+        type="text"
+        formControlName="lastName"
+        [ngClass]="{ 'is-invalid': hasError('lastName', 'required') || hasError('lastName', 'minlength') }"
+        placeholder="Enter your last name"
+      />
+      <div *ngIf="hasError('lastName', 'required')" class="invalid-feedback">Last name is required</div>
+      <div *ngIf="hasError('lastName', 'minlength')" class="invalid-feedback">Minimum 2 characters required</div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        [ngClass]="{ 'is-invalid': hasError('email', 'required') || hasError('email', 'email') }"
+        placeholder="Enter your email"
+      />
+      <div *ngIf="hasError('email', 'required')" class="invalid-feedback">Email is required</div>
+      <div *ngIf="hasError('email', 'email')" class="invalid-feedback">Invalid email format</div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [ngClass]="{ 'is-invalid': hasError('password', 'required') || hasError('password', 'minlength') }"
+        placeholder="Enter a secure password"
+      />
+      <div *ngIf="hasError('password', 'required')" class="invalid-feedback">Password is required</div>
+      <div *ngIf="hasError('password', 'minlength')" class="invalid-feedback">Minimum 6 characters required</div>
+    </div>
+
+    <div *ngIf="error" class="error-message">{{ error }}</div>
+    <div *ngIf="success" class="success-message">{{ success }}</div>
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Registering...' : 'Register' }}
+    </button>
+
+    <div class="auth-links">
+      Already have an account?
+      <a (click)="onLogin()">Login</a>
+    </div>
+  </form>
+</div>
+

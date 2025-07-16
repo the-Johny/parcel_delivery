@@ -1,0 +1,125 @@
+### AUTH MODULE
+@access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbWQ0OXQyenQwMDAwd2o0dzhnaHVmMDc5IiwiZW1haWwiOiJqb2huLmRvZUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUyNTY4Mjc5LCJleHAiOjE3NTMxNzMwNzl9.KJgfSo3U_Xl3sqHDBJF2w6T8s_XBdzFrvgjbu2gqyZg
+
+# Register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+###
+# Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+###
+# Refresh Token (JWT required)
+POST http://localhost:3000/auth/refresh
+Authorization: Bearer {{{{access_token}}}}
+
+###
+# Get Profile (JWT required)
+GET http://localhost:3000/auth/profile
+Authorization: Bearer {{{{access_token}}}}
+
+
+### USER MODULE
+
+# Register User
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "password": "password123"
+}
+
+###
+# Login User
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "username": "newuser",
+  "password": "password123"
+}
+
+###
+# List Users (Admin, JWT required)
+GET http://localhost:3000/users?page=1&limit=10
+Authorization: Bearer <admin_jwt_token>
+
+###
+# Get User Statistics (Admin, JWT required)
+GET http://localhost:3000/users/statistics
+Authorization: Bearer <admin_jwt_token>
+
+###
+# Get Current User Profile (JWT required)
+GET http://localhost:3000/users/profile
+Authorization: Bearer {{{{access_token}}}}
+
+###
+# Update Current User Profile (JWT required)
+PATCH http://localhost:3000/users/profile
+Authorization: Bearer {{{{access_token}}}}
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com"
+}
+
+###
+# Change Password (JWT required)
+POST http://localhost:3000/users/change-password
+Authorization: Bearer {{{{access_token}}}}
+Content-Type: application/json
+
+{
+  "oldPassword": "password123",
+  "newPassword": "newpassword456"
+}
+
+###
+# Get User by ID (Admin, JWT required)
+GET http://localhost:3000/users/1
+Authorization: Bearer <admin_jwt_token>
+
+###
+# Update User by ID (Admin, JWT required)
+PATCH http://localhost:3000/users/1
+Authorization: Bearer <admin_jwt_token>
+Content-Type: application/json
+
+{
+  "email": "updatedemail@example.com"
+}
+
+###
+# Activate User (Admin, JWT required)
+PUT http://localhost:3000/users/1/activate
+Authorization: Bearer <admin_jwt_token>
+
+###
+# Deactivate User (Admin, JWT required)
+PUT http://localhost:3000/users/1/deactivate
+Authorization: Bearer <admin_jwt_token>
+
+###
+# Verify User (Admin, JWT required)
+PUT http://localhost:3000/users/1/verify
+Authorization: Bearer <admin_jwt_token>
+
+###
+# Delete User (Admin, JWT required)
+DELETE http://localhost:3000/users/1
+Authorization: Bearer <admin_jwt_token>
+
