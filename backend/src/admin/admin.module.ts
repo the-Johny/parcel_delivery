@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
-import { UserManagementService } from './services/user-management.service';
-import { ParcelManagementService } from './services/parcel-management.service';
-import { NotificationService } from './services/notification.service';
-import { AuditLogService } from './services/audit-log.service';
-import { SystemSettingsService } from './services/system-settings.service';
+import { UserManagementService } from '../user/dtos/user-management.service';
+import { ParcelService } from '../parcel/parcel.service';
+import { NotificationService } from '../notification/notification.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 
@@ -20,10 +18,8 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [
     AdminService,
     UserManagementService,
-    ParcelManagementService,
+    ParcelService,
     NotificationService,
-    AuditLogService,
-    SystemSettingsService,
     PrismaService,
   ],
   exports: [AdminService],

@@ -1,0 +1,121 @@
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(124,58,237,0.10);
+  padding: 40px 32px 32px 32px;
+  min-width: 340px;
+  max-width: 95vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  color: #7c3aed;
+  cursor: pointer;
+}
+.modal-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #23213d;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.modal-subtitle {
+  color: #6c6c80;
+  text-align: center;
+  margin-bottom: 28px;
+  font-size: 1.1rem;
+}
+form label {
+  font-weight: 600;
+  color: #23213d;
+  margin-bottom: 4px;
+  display: block;
+  margin-top: 12px;
+}
+input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 14px 12px;
+  margin: 8px 0 0 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  box-sizing: border-box;
+  background: #f8fafc;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.04);
+  margin-bottom: 0;
+}
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+  margin-top: 4px;
+}
+.forgot-link {
+  color: #6c6c80;
+  font-size: 0.98rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.forgot-link:hover {
+  color: #7c3aed;
+}
+.btn-login {
+  width: 100%;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.06);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-login:hover {
+  background: #5b21b6;
+}
+.modal-bottom {
+  text-align: center;
+  margin-top: 10px;
+  color: #6c6c80;
+  font-size: 1.05rem;
+}
+.signup-link {
+  color: #38bdf8;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 4px;
+  transition: color 0.2s;
+}
+.signup-link:hover {
+  color: #7c3aed;
+}
+@media (max-width: 600px) {
+  .modal-content {
+    min-width: 95vw;
+    padding: 20px 8px 16px 8px;
+  }
+  .modal-title {
+    font-size: 1.4rem;
+  }
+} 

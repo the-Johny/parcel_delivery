@@ -1,86 +1,67 @@
-// src/app/features/auth/components/login/login.component.ts
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LoginRequest } from '../../../../core/models/auth.model';
+import { AuthModalService } from '../../../../core/services/auth-modal.service';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   error = '';
-  returnUrl = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
+    private authModalService: AuthModalService,
+    private router: Router
   ) {
-    // Redirect to dashboard if already logged in
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
-    }
-
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  ngOnInit(): void {
-    // Get return URL from route parameters or default to dashboard
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
-  }
-
-  // Convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
   onSubmit(): void {
     this.submitted = true;
     this.error = '';
-
-    // Stop if form is invalid
+    
     if (this.loginForm.invalid) {
       return;
     }
-
+    
     this.loading = true;
-    const loginData: LoginRequest = {
-      email: this.f['email'].value,
-      password: this.f['password'].value
-    };
-
-    this.authService.login(loginData).subscribe({
-      next: (response: { user: { isVerified: any; }; }) => {
+    
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response) => {
         this.loading = false;
-        // Check if email is verified
-        if (!response.user.isVerified) {
-          this.router.navigate(['/auth/verify-email']);
-          return;
-        }
-        
-        // Redirect to return URL or dashboard
-        this.router.navigate([this.returnUrl]);
+        // Navigate to dashboard on successful login
+        this.router.navigate(['/dashboard']);
       },
-      error: (error: { message: string; }) => {
+      error: (error) => {
         this.loading = false;
-        this.error = error.message || 'Login failed. Please try again.';
+        if (error.status === 401) {
+          this.error = 'Invalid email or password. Please try again.';
+        } else if (error.status === 0) {
+          this.error = 'Unable to connect to server. Please check your connection.';
+        } else {
+          this.error = error.error?.message || 'An error occurred during login. Please try again.';
+        }
       }
     });
   }
 
-  onForgotPassword(): void {
-    this.router.navigate(['/auth/forgot-password']);
+  goToRegister(): void {
+    this.authModalService.switchToRegister();
   }
-
-  onRegister(): void {
-    this.router.navigate(['/auth/register']);
-  }
-}
+} 

@@ -1,0 +1,19 @@
+<div class="modal-overlay" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="modal-close" (click)="onClose()">&times;</button>
+    <h1 class="modal-title">Create Account</h1>
+    <p class="modal-subtitle">Join SendIT for fast and reliable deliveries.</p>
+    <form (ngSubmit)="onSubmit()">
+      <label>Full Name</label>
+      <input type="text" [(ngModel)]="fullName" name="fullName" required />
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" name="email" required />
+      <label>Password</label>
+      <input type="password" [(ngModel)]="password" name="password" required />
+      <button type="submit" class="btn-signup">Sign Up</button>
+    </form>
+    <div class="modal-bottom">
+      Already have an account? <a href="#" class="login-link" (click)="$event.preventDefault(); onSwitchToLogin()">Log In</a>
+    </div>
+  </div>
+</div> 

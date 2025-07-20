@@ -1,88 +1,115 @@
 .register-container {
-  max-width: 450px;
-  margin: 60px auto;
-  padding: 30px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 40px 32px 32px 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-h2 {
+.register-title {
   text-align: center;
-  margin-bottom: 25px;
-  color: #333;
+  margin-bottom: 8px;
+  color: #23213d;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.register-subtitle {
+  text-align: center;
+  margin-bottom: 28px;
+  color: #6c6c80;
+  font-size: 1.08rem;
 }
 
 .form-group {
+  width: 100%;
   margin-bottom: 20px;
-
-  label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-
-  input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-
-    &.is-invalid {
-      border-color: #dc3545;
-    }
-  }
-
-  .invalid-feedback {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 4px;
-  }
 }
 
-button {
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #23213d;
+}
+
+input {
   width: 100%;
   padding: 12px;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: 0.3s;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fafbfc;
+  transition: border-color 0.2s;
+}
 
-  &:disabled {
-    background-color: #7abaff;
-    cursor: not-allowed;
-  }
+input:focus {
+  border-color: #a259ec;
+  outline: none;
+}
+
+input.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  color: #dc3545;
+  font-size: 0.92rem;
+  margin-top: 5px;
+}
+
+.blue-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #a259ec;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  transition: background 0.2s;
+}
+
+.blue-btn:disabled {
+  background-color: #d1b3f6;
+  cursor: not-allowed;
+}
+
+.blue-btn:hover:not(:disabled) {
+  background-color: #7c3aed;
 }
 
 .error-message {
   color: #dc3545;
   text-align: center;
   margin-bottom: 10px;
-}
-
-.success-message {
-  color: #28a745;
-  text-align: center;
-  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 .auth-links {
   text-align: center;
-  margin-top: 20px;
-
-  a {
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+  margin-top: 18px;
+  font-size: 1rem;
 }
 
+.login-link {
+  color: #a259ec;
+  margin-left: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.login-link:hover {
+  color: #7c3aed;
+  text-decoration: underline;
+} 

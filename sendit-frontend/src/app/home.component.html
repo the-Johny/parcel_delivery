@@ -1,0 +1,111 @@
+<section class="hero">
+  <nav class="navbar">
+    <div class="logo">
+      <span class="brand">SendIT <span style="font-size:1.2em;">🚚</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-outline" (click)="openLoginModal()">Login</button>
+      <button class="btn-cta" (click)="openSignUpModal()">Sign Up</button>
+    </div>
+  </nav>
+  <div class="hero-content">
+    <h1>Your Parcels, Delivered with Care. <span class="highlight">Fast, Reliable, Simple.</span></h1>
+    <p>Get instant courier quotes based on weight, track your deliveries in real-time, and receive timely notifications from pickup to destination.</p>
+    <a class="btn-cta" href="/send">Send a Parcel Now</a>
+  </div>
+</section>
+
+<app-login-modal *ngIf="showLoginModal" (close)="closeLoginModal()" (switchToSignUp)="switchToSignUp()"></app-login-modal>
+<app-sign-up-modal *ngIf="showSignUpModal" (close)="closeSignUpModal()" (switchToLogin)="switchToLogin()"></app-sign-up-modal>
+
+<section id="features" class="features-section">
+  <h2 style="text-align:center; font-size:2.2rem; font-weight:800; margin-bottom:8px;">Why Choose SendIT?</h2>
+  <p style="text-align:center; color:#6c6c80; margin-bottom:32px;">Everything you need for seamless parcel delivery.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon" style="font-size:2.5rem;">⚖️</div>
+      <h3>Weight-Based Quotes</h3>
+      <p>Transparent and fair pricing. Get instant quotes based on your parcel's weight category.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="font-size:2.5rem;">📍</div>
+      <h3>Real-time Tracking</h3>
+      <p>Never lose sight of your package. Monitor your delivery's journey with our live map tracking.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="font-size:2.5rem;">🔔</div>
+      <h3>Email & SMS Alerts</h3>
+      <p>Stay informed every step of the way. Receive automatic notifications for all status updates.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon" style="font-size:2.5rem;">🛡️</div>
+      <h3>Secure & Reliable</h3>
+      <p>Your parcels are in safe hands. We prioritize security and on-time delivery for your peace of mind.</p>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials" class="testimonials-section">
+  <h2>What Our Customers Say</h2>
+  <p class="testimonials-subtitle">We're trusted by individuals and businesses across the country.</p>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p class="testimonial-text">"SendIT is a game-changer! The real-time tracking is incredibly accurate, and I love the constant updates. I finally have peace of mind when sending important documents."</p>
+      <div class="testimonial-user">
+        <span class="testimonial-avatar">JS</span>
+        <div>
+          <div class="testimonial-name">Jane Smith</div>
+          <div class="testimonial-role">Small Business Owner</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p class="testimonial-text">"The process is so straightforward. From getting a quote to booking a pickup, it takes less than five minutes. Highly recommend for anyone who needs a fast and reliable courier."</p>
+      <div class="testimonial-user">
+        <span class="testimonial-avatar">MD</span>
+        <div>
+          <div class="testimonial-name">Michael Doe</div>
+          <div class="testimonial-role">E-commerce Seller</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to Send Your Parcel?</h2>
+  <p>Join thousands of happy senders and experience the future of delivery.</p>
+  <a class="btn-cta" href="#signup">Sign Up Now for Free</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="brand">SendIT</div>
+      <div class="footer-desc">Fast, Reliable, Simple.</div>
+    </div>
+    <div class="footer-links">
+      <div>
+        <div class="footer-title">Quick Links</div>
+        <a href="#features">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#how">How It Works</a>
+      </div>
+      <div>
+        <div class="footer-title">Legal</div>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+      <div>
+        <div class="footer-title">Contact</div>
+        <a href="mailto:support&#64;sendit.com">support&#64;sendit.com</a>
+        <a href="tel:+1234567890">+1 (234) 567-890</a>
+      </div>
+    </div>
+  </div>
+</footer> 
